@@ -1,0 +1,40 @@
+TASK: 'EXPR'
+OUT_DIR: '/root/ABAW5-ACCC/checkpoint'
+DATA_LOADER:
+  DATA_DIR: '/root/autodl-tmp'
+  SEQ_LEN: 64
+  IMG_SIZE: 112
+  NUM_WORKERS: 8
+MODEL:
+  FREEZE_BATCHNORM: True
+TRANF:
+  NUM_ENC_DEC: 3
+  NHEAD: 4 #8
+  DIM_FC: 512 #1024
+  DROPOUT: 0.3
+
+TRAIN:
+  BATCH_SIZE: 32
+  MIXED_PRECISION: True
+  LABEL_SMOOTHING: 0.1
+  LOSS_WEIGHTS: False
+  LIMIT_TRAIN_BATCHES: 1.
+TEST:
+  BATCH_SIZE: 16
+OPTIM:
+  NAME: 'adamw'
+  LR_POLICY: 'reducelrMetric'  # reducelrMetric
+  BASE_LR: 0.001
+  MIN_LR: 0.
+  MOMENTUM: 0.9
+  DAMPENING: 0.
+  WEIGHT_DECAY: 5e-5
+  WARMUP_FACTOR: 0.1
+  USE_SWA: False
+  MAX_EPOCH: 30
+  WARMUP_EPOCHS: 5
+  FOCAL_ALPHA: 0.9
+  FOCAL_GAMMA: 2.0
+LOGGER: 'TensorBoard'  # TensorBoard, or wandb
+TEST_ONLY: '/root/TEMMA_ABAW/checkpoint/EXPR/val-0.304/checkpoints/epoch=25-step=7565.ckpt'
+MODEL_NAME: "only_trans"
